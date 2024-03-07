@@ -14,29 +14,29 @@ public class SubjectServiceImpl implements SubjectService{
         this.subjectRepository = subjectRepository;
     }
 
-    public Subjects createSubject(Subjects subject) {
+    public Subject createSubject(Subject subject) {
         subject.setId(UUID.randomUUID());
         return subjectRepository.save(subject);
     }
 
-    public List<Subjects> findAllSubjects() {
+    public List<Subject> findAllSubjects() {
         return subjectRepository.findAll();
     }
 
-    public Subjects findSubjectById(UUID id) {
-        Optional<Subjects> subject = subjectRepository.findById(id);
+    public Subject findSubjectById(UUID id) {
+        Optional<Subject> subject = subjectRepository.findById(id);
         return subject.orElse(null);
     }
     @Override
-    public Subjects deleteSubjectById(UUID id) {
+    public Subject deleteSubjectById(UUID id) {
         subjectRepository.deleteById(id);
         return null;
     }
 
-    public Subjects updateSubjectById(UUID id, Subjects newSubject) {
-        Optional<Subjects> optionalSubject = subjectRepository.findById(id);
+    public Subject updateSubjectById(UUID id, Subject newSubject) {
+        Optional<Subject> optionalSubject = subjectRepository.findById(id);
         if(optionalSubject.isPresent()){
-            Subjects subject = optionalSubject.get();
+            Subject subject = optionalSubject.get();
             subject.setType(newSubject.getType());
             subject.setName(newSubject.getName());
             return subjectRepository.save(subject);

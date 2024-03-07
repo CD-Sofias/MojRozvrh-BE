@@ -13,27 +13,27 @@ public class SubjectController {
     private final SubjectServiceImpl subjectService;
 
     @PostMapping
-    public Subjects createSubject(@RequestBody Subjects subject) {
+    public Subject createSubject(@RequestBody Subject subject) {
         return subjectService.createSubject(subject);
     }
 
     @GetMapping
-    public List<Subjects> findAllSubjects() {
+    public List<Subject> findAllSubjects() {
         return subjectService.findAllSubjects();
     }
 
     @GetMapping("{id}")
-    public Subjects findSubjectById(@PathVariable UUID id) {
+    public Subject findSubjectById(@PathVariable UUID id) {
         return subjectService.findSubjectById(id);
     }
 
     @DeleteMapping("{id}")
-    public Subjects deleteSubjectById(@PathVariable UUID id) {
+    public Subject deleteSubjectById(@PathVariable UUID id) {
         return subjectService.deleteSubjectById(id);
     }
 
     @PutMapping("{id}")
-    public Subjects updateSubjectById(@PathVariable UUID id, @RequestBody Subjects subject) {
+    public Subject updateSubjectById(@PathVariable UUID id, @RequestBody Subject subject) {
         return subjectService.updateSubjectById(id, subject);
     }
 }

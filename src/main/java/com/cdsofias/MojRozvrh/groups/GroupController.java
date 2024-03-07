@@ -14,27 +14,27 @@ public class GroupController {
 
 
     @PostMapping
-    public Groups createGroup(@RequestBody Groups group) {
-        return groupService.createGroups(group);
+    public Group createGroup(@RequestBody Group group) {
+        return groupService.createGroup(group);
     }
 
     @GetMapping
-    public List<Groups> findAllGroups() {
+    public List<Group> findAllGroups() {
         return groupService.findAllGroups();
     }
 
     @GetMapping("{id}")
-    public Groups findGroupById(@PathVariable UUID id) {
+    public Group findGroupById(@PathVariable UUID id) {
         return groupService.findGroupById(id);
     }
 
     @DeleteMapping("{id}")
-    public Groups deleteGroupById(@PathVariable UUID id) {
+    public Group deleteGroupById(@PathVariable UUID id) {
         return groupService.deleteGroupById(id);
     }
 
     @PutMapping("{id}")
-    public Groups updateGroupById(@PathVariable UUID id, @RequestBody Groups group) {
+    public Group updateGroupById(@PathVariable UUID id, @RequestBody Group group) {
         return groupService.updateGroupById(id, group);
     }
 }
