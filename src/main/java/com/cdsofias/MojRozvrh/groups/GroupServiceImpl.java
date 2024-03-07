@@ -1,7 +1,7 @@
 package com.cdsofias.MojRozvrh.groups;
 
-import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +10,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class GroupServiceImpl implements GroupService {
+
     private final GroupRepository groupRepository;
 
     public Group createGroup(Group group) {
