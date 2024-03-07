@@ -1,18 +1,15 @@
 package com.cdsofias.MojRozvrh.subjects;
 
 import org.springframework.stereotype.Service;
-
+import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class SubjectServiceImpl implements SubjectService{
     private final SubjectRepository subjectRepository;
-
-    public SubjectServiceImpl(SubjectRepository subjectRepository) {
-        this.subjectRepository = subjectRepository;
-    }
 
     public Subject createSubject(Subject subject) {
         subject.setId(UUID.randomUUID());
