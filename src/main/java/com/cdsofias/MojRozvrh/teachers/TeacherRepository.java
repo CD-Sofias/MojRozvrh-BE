@@ -1,4 +1,4 @@
-package com.cdsofias.MojRozvrh.subjects;
+package com.cdsofias.MojRozvrh.teachers;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface SubjectRepository extends JpaRepository<Subject, UUID> {
+public interface TeacherRepository extends JpaRepository<Teacher, UUID> {
 }
