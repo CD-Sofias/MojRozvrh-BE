@@ -1,5 +1,4 @@
 package com.cdsofias.MojRozvrh.department;
-
 import com.cdsofias.MojRozvrh.faculty.Faculty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
