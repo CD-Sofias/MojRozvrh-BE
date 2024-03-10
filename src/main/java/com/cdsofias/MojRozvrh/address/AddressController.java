@@ -1,6 +1,6 @@
 package com.cdsofias.MojRozvrh.address;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,14 +8,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/address")
+@RequiredArgsConstructor
 public class AddressController {
 
     private final AddressService addressService;
-
-    @Autowired
-    public AddressController(AddressService addressService) {
-        this.addressService = addressService;
-    }
 
     @GetMapping
     public List<Address> getAllAddress() {
