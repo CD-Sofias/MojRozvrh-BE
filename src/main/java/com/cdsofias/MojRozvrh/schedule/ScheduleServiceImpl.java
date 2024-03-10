@@ -25,8 +25,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public Schedule findSheduleById(UUID id) {
-        Optional<Schedule> shedule = scheduleRepository.findById(id);
-        return shedule.orElse(null);
+        Optional<Schedule> schedule = scheduleRepository.findById(id);
+        return schedule.orElse(null);
     }
 
     @Override
@@ -37,10 +37,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public Schedule updateSheduleById(UUID id, Schedule newSchedule) {
-        Optional<Schedule> optionalShedule = scheduleRepository.findById(id);
-        if(optionalShedule.isPresent()){
-            Schedule schedule = optionalShedule.get();
+        Optional<Schedule> optionalSchedule = scheduleRepository.findById(id);
+        if(optionalSchedule.isPresent()){
+            Schedule schedule = optionalSchedule.get();
             schedule.setName(newSchedule.getName());
+            if (newSchedule.getUser() != null) {
+                schedule.setUser(newSchedule.getUser());
+            }
             return scheduleRepository.save(schedule);
         }
         return null;
