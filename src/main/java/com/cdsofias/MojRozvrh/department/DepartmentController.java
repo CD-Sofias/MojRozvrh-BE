@@ -1,21 +1,17 @@
 package com.cdsofias.MojRozvrh.department;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "department")
+@RequestMapping("department")
+@RequiredArgsConstructor
 public class DepartmentController {
 
     private final DepartmentService departmentService;
-
-    @Autowired
-    public DepartmentController(DepartmentService departmentService) {
-        this.departmentService = departmentService;
-    }
 
     @GetMapping
     public List<Department> getDepartments() {
@@ -27,7 +23,7 @@ public class DepartmentController {
         return departmentService.addNewDepartment(department);
     }
 
-    @DeleteMapping(path = "{departmentId}")
+    @DeleteMapping("{departmentId}")
     public void deleteDepartment(@PathVariable("departmentId") UUID departmentId) {
         departmentService.deleteDepartment(departmentId);
     }

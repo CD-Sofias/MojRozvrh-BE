@@ -1,21 +1,17 @@
 package com.cdsofias.MojRozvrh.classroom;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "classroom")
+@RequestMapping("classroom")
+@RequiredArgsConstructor
 public class ClassroomController {
 
     private final ClassroomService classroomService;
-
-    @Autowired
-    public ClassroomController(ClassroomService classroomService) {
-        this.classroomService = classroomService;
-    }
 
     @GetMapping
     public List<Classroom> getClassrooms() {
@@ -32,7 +28,7 @@ public class ClassroomController {
         return classroomService.addNewClassroom(classroom);
     }
 
-    @DeleteMapping(path = "{classroomId}")
+    @DeleteMapping("{classroomId}")
     public void deleteClassroom(@PathVariable("classroomId") UUID classroomId) {
         classroomService.deleteClassroom(classroomId);
     }

@@ -2,7 +2,7 @@ package com.cdsofias.MojRozvrh.department;
 
 import com.cdsofias.MojRozvrh.faculty.Faculty;
 import com.cdsofias.MojRozvrh.faculty.FacultyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,16 +11,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepository departmentRepository;
     private final FacultyRepository facultyRepository;
-
-    @Autowired
-    public DepartmentServiceImpl(DepartmentRepository departmentRepository, FacultyRepository facultyRepository) {
-        this.departmentRepository = departmentRepository;
-        this.facultyRepository = facultyRepository;
-    }
 
     @Override
     public List<Department> getDepartments() {

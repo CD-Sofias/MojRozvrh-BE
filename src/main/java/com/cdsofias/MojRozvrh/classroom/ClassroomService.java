@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface ClassroomService {
     List<Classroom> getClassrooms();
-    Classroom getClassroom(UUID classroomId); // новый метод
+    Classroom getClassroom(UUID classroomId);
     Classroom addNewClassroom(Classroom classroom);
     void deleteClassroom(UUID classroomId);
     Classroom updateClassroom(UUID classroomId, Classroom classroom);

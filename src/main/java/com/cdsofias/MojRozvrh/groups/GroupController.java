@@ -1,6 +1,6 @@
 package com.cdsofias.MojRozvrh.groups;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,10 +8,9 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/groups")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class GroupController {
     private final GroupServiceImpl groupService;
-
 
     @PostMapping
     public Group createGroup(@RequestBody Group group) {

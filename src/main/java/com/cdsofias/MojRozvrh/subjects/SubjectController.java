@@ -1,6 +1,6 @@
 package com.cdsofias.MojRozvrh.subjects;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/subject")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SubjectController {
     private final SubjectServiceImpl subjectService;
 

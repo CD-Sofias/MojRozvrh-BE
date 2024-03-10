@@ -2,7 +2,7 @@ package com.cdsofias.MojRozvrh.classroom;
 
 import com.cdsofias.MojRozvrh.address.Address;
 import com.cdsofias.MojRozvrh.address.AddressRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,18 +11,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class ClassroomServiceImpl implements ClassroomService {
 
     private final ClassroomRepository classroomRepository;
     private final AddressRepository addressRepository;
-
-    @Autowired
-    public ClassroomServiceImpl(ClassroomRepository classroomRepository, AddressRepository addressRepository) {
-        this.classroomRepository = classroomRepository;
-        this.addressRepository = addressRepository;
-    }
-
-
 
     @Override
     public List<Classroom> getClassrooms() {

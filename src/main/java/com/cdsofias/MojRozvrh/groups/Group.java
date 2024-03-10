@@ -19,7 +19,7 @@ import java.util.UUID;
 @Table(name = "groups")
 public class Group {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy =  GenerationType.AUTO)
     private UUID id;
     private Number quantity;
     private String name;
