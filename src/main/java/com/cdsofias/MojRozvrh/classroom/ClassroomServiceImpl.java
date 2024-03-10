@@ -23,7 +23,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @Override
-    public Classroom getClassroom(UUID classroomId) { // новый метод
+    public Classroom getClassroom(UUID classroomId) {
         return classroomRepository.findById(classroomId)
                 .orElseThrow(() -> new IllegalStateException(
                         "Classroom with id " + classroomId + " does not exist"));
