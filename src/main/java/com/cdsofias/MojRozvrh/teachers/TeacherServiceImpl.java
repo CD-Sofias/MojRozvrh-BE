@@ -14,7 +14,6 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher createTeacher(Teacher teacher) {
-        teacher.setId(UUID.randomUUID());
         return teacherRepository.save(teacher);
     }
 
