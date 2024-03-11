@@ -8,5 +8,5 @@ public interface UserService {
     List<User> findAllUsers();
     User findUserById(UUID id);
     User deleteUserById(UUID id);
-    User updateUserById(UUID id, User newUser);
+    User updateUserById(UUID id, User newUser, UUID departmentId);
 }

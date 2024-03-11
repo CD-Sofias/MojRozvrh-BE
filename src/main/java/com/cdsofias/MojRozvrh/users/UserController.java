@@ -18,6 +18,7 @@ public class UserController {
         return userService.createUser(user);
     }
 
+
     @GetMapping
     public List<User> findAllUsers() {
         return userService.findAllUsers();
@@ -33,8 +34,8 @@ public class UserController {
         return userService.deleteUserById(id);
     }
 
-    @PutMapping("{id}")
-    public User updateUserById(@PathVariable UUID id, @RequestBody User user) {
-        return userService.updateUserById(id, user);
+    @PutMapping("{id}/{departmentId}")
+    public User updateUserById(@PathVariable UUID id, @PathVariable UUID departmentId, @RequestBody User user) {
+        return userService.updateUserById(id, user, departmentId);
     }
 }
