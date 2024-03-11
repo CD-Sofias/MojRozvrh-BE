@@ -34,8 +34,8 @@ public class UserController {
         return userService.deleteUserById(id);
     }
 
-    @PutMapping("{id}/{departmentId}")
-    public User updateUserById(@PathVariable UUID id, @PathVariable UUID departmentId, @RequestBody User user) {
+    @PutMapping("{id}")
+    public User updateUserById(@PathVariable UUID id, @RequestBody User user, @PathVariable(required = false) UUID departmentId) {
         return userService.updateUserById(id, user, departmentId);
     }
 }

@@ -23,18 +23,20 @@ import java.util.UUID;
 
         @Override
         public User createUser(User user) {
-            Optional<User> userOptional = userRepository
-                    .findByEmail(user.getEmail());
+            Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
             if (userOptional.isPresent()) {
                 throw new IllegalStateException("User already exists");
             }
 
-            Department department = departmentRepository.findById(user.getDepartment().getId())
-                    .orElseThrow(() -> new RuntimeException("Department not found"));
-            user.setDepartment(department);
+            if (user.getDepartment() != null && user.getDepartment().getId() != null) {
+                Department department = departmentRepository.findById(user.getDepartment().getId())
+                        .orElseThrow(() -> new RuntimeException("Department not found"));
+                user.setDepartment(department);
+            }
 
             return userRepository.saveAndFlush(user);
         }
+
 
 
         @Override
