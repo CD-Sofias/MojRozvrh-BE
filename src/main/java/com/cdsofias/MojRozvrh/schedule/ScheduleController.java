@@ -10,7 +10,7 @@ import java.util.UUID;
 @RequestMapping("/api/schedule")
 @AllArgsConstructor
 public class ScheduleController {
-    private final ScheduleServiceImpl scheduleService;
+    private final ScheduleService scheduleService;
 
     @PostMapping
     public Schedule createSchedule(@RequestBody Schedule schedule) {

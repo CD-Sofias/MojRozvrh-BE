@@ -22,10 +22,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             User user = userRepository.findById(schedule.getUser().getId())
                     .orElseThrow(() -> new RuntimeException("User not found"));
             schedule.setUser(user);
-        } else {
-            schedule.setUser(null);
         }
-
         return scheduleRepository.saveAndFlush(schedule);
     }
     @Override
