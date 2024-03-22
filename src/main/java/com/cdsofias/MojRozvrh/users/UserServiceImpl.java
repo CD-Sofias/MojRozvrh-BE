@@ -51,9 +51,6 @@ import java.util.UUID;
             User user = userRepository.findById(id)
                     .orElseThrow(() -> new IllegalStateException(
                             "User with id " + id + " does not exist"));
-
-//            scheduleRepository.deleteAll(user.getSchedules().remove());
-
             user.setDepartment(null);
 
             userRepository.deleteById(id);
