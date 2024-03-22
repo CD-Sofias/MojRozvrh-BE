@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/subject")
+@RequestMapping("subject")
 @AllArgsConstructor
 public class SubjectController {
     private final SubjectServiceImpl subjectService;
 
     @PostMapping
-    public Subject createSubject(@RequestBody Subject subject) {
-        return subjectService.createSubject(subject);
+    public Subject createSubject(@RequestBody CreateSubjectDto subjectDto) {
+        return subjectService.createSubject(subjectDto);
     }
 
     @GetMapping
