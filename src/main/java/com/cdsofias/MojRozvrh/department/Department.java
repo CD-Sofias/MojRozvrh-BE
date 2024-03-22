@@ -1,6 +1,7 @@
 package com.cdsofias.MojRozvrh.department;
 
 import com.cdsofias.MojRozvrh.faculty.Faculty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "department")
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

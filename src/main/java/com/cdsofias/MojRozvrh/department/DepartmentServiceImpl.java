@@ -2,12 +2,12 @@ package com.cdsofias.MojRozvrh.department;
 
 import com.cdsofias.MojRozvrh.faculty.Faculty;
 import com.cdsofias.MojRozvrh.faculty.FacultyRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -47,19 +47,19 @@ public class DepartmentServiceImpl implements DepartmentService {
         departmentRepository.deleteById(departmentId);
     }
 
-    public Department updateDepartment(UUID departmentId, String name, UUID facultyId) {
+    public Department updateDepartment(UUID departmentId, @Valid CreateDepartmentDto departmentDto) {
         Department department = departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new IllegalStateException(
                         "Department with id " + departmentId + " does not exist"));
 
-        if (name != null && !name.isEmpty() && !Objects.equals(department.getName(), name)) {
-            department.setName(name);
+        if (departmentDto.name() != null && !departmentDto.name().isEmpty() && !Objects.equals(department.getName(), departmentDto.name())) {
+            department.setName(departmentDto.name());
         }
 
-        if (facultyId != null) {
-            Faculty faculty = facultyRepository.findById(facultyId)
+        if (departmentDto.facultyId() != null) {
+            Faculty faculty = facultyRepository.findById(departmentDto.facultyId())
                     .orElseThrow(() -> new IllegalStateException(
-                            "Faculty with id " + facultyId + " does not exist"));
+                            "Faculty with id " + departmentDto.facultyId() + " does not exist"));
             department.setFaculty(faculty);
         }
 

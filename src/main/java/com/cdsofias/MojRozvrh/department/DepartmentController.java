@@ -19,11 +19,12 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public Department registerNewDepartment(@RequestBody Department department) {
-        return departmentService.addNewDepartment(department);
+    public ResponseEntity<Department> createDepartment(@Valid @RequestBody CreateDepartmentDto departmentDto) {
+        Department department = departmentService.addNewDepartment(departmentDto);
+        return ResponseEntity.created(URI.create("/department/" + department.getId())).body(department);
     }
 
-    @DeleteMapping(path = "{departmentId}")
+    @DeleteMapping("{departmentId}")
     public void deleteDepartment(@PathVariable("departmentId") UUID departmentId) {
         departmentService.deleteDepartment(departmentId);
     }
