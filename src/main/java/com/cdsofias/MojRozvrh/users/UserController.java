@@ -1,23 +1,26 @@
 package com.cdsofias.MojRozvrh.users;
 
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("users")
 @AllArgsConstructor
 public class UserController {
     private final UserServiceImpl userService;
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public ResponseEntity<User> createUser(@Valid @RequestBody CreateUserDto userDto) {
+        User user = userService.createUser(userDto);
+        return ResponseEntity.created(URI.create("/user/" + user.getId())).body(user);
     }
-
     @GetMapping
     public List<User> findAllUsers() {
         return userService.findAllUsers();

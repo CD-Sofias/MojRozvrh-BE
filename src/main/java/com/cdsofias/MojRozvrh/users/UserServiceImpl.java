@@ -23,17 +23,22 @@ import java.util.UUID;
         }
 
         @Override
-        public User createUser(User user) {
-            Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
+        public User createUser(CreateUserDto userDto) {
+            Optional<User> userOptional = userRepository.findByEmail(userDto.email());
             if (userOptional.isPresent()) {
                 throw new IllegalStateException("User already exists");
             }
 
-            if (user.getDepartment() != null && user.getDepartment().getId() != null) {
-                Department department = departmentRepository.findById(user.getDepartment().getId())
-                        .orElseThrow(() -> new RuntimeException("Department not found"));
-                user.setDepartment(department);
-            }
+            Department department = departmentRepository.findById(userDto.departmentId())
+                    .orElseThrow(() -> new RuntimeException("Department not found"));
+
+            User user = new User();
+            user.setName(userDto.email());
+            user.setSurname(userDto.surname());
+            user.setEmail(userDto.email());
+            user.setPassword(userDto.password());
+            user.setRole(userDto.role());
+            user.setDepartment(department);
 
             return userRepository.saveAndFlush(user);
         }

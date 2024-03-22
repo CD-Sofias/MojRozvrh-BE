@@ -1,11 +1,8 @@
 package com.cdsofias.MojRozvrh;
 
-import com.cdsofias.MojRozvrh.users.Role;
-import com.cdsofias.MojRozvrh.users.User;
-import com.cdsofias.MojRozvrh.users.UserServiceImpl;
 import com.cdsofias.MojRozvrh.department.Department;
 import com.cdsofias.MojRozvrh.department.DepartmentRepository;
-import com.cdsofias.MojRozvrh.users.UserRepository;
+import com.cdsofias.MojRozvrh.users.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -40,21 +37,26 @@ public class MojRozvrhApplicationUserTests {
 
     @Test
     public void testCreateUser() {
+        UUID departmentId = UUID.randomUUID();
+        CreateUserDto userDto = new CreateUserDto("TestName", "TestSurname", "test@test.com", "TestPassword", Role.USER, departmentId);
+
         User user = new User();
-        user.setEmail("test@test.com");
+        user.setEmail(userDto.email());
         Department department = new Department();
-        department.setId(UUID.randomUUID());
+        department.setId(departmentId);
         user.setDepartment(department);
 
         when(userRepository.findByEmail(any(String.class))).thenReturn(Optional.empty());
         when(departmentRepository.findById(any(UUID.class))).thenReturn(Optional.of(department));
         when(userRepository.saveAndFlush(any(User.class))).thenReturn(user);
 
-        User createdUser = userService.createUser(user);
+        User createdUser = userService.createUser(userDto);
 
-        assertEquals(user.getEmail(), createdUser.getEmail());
-        assertEquals(user.getDepartment().getId(), createdUser.getDepartment().getId());
+        assertEquals(userDto.email(), createdUser.getEmail());
+        assertEquals(userDto.departmentId(), createdUser.getDepartment().getId());
     }
+
+
 
     @Test
     public void testFindAllUsers() {
