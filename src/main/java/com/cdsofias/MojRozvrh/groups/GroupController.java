@@ -1,21 +1,24 @@
 package com.cdsofias.MojRozvrh.groups;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/groups")
+@RequestMapping("groups")
 @AllArgsConstructor
 public class GroupController {
     private final GroupServiceImpl groupService;
 
-
     @PostMapping
-    public Group createGroup(@RequestBody Group group) {
-        return groupService.createGroup(group);
+    public ResponseEntity<Group> createGroup(@Valid @RequestBody CreateGroupDto groupDto) {
+        Group group = groupService.createGroup(groupDto);
+        return ResponseEntity.created(URI.create("/group/" + group.getId())).body(group);
     }
 
     @GetMapping
