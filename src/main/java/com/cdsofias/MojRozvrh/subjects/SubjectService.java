@@ -5,7 +5,7 @@ import java.util.UUID;
 
 
 public interface SubjectService {
-    Subject createSubject(Subject subject);
+    Subject createSubject(CreateSubjectDto subjectDto);
     List<Subject> findAllSubjects();
     Subject findSubjectById(UUID id);
     Subject deleteSubjectById(UUID id);
