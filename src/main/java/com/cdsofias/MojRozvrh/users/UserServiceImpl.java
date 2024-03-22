@@ -4,6 +4,7 @@ import com.cdsofias.MojRozvrh.department.Department;
 import com.cdsofias.MojRozvrh.department.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -45,12 +46,16 @@ import java.util.UUID;
             return user.orElse(null);
         }
         @Override
+        @Transactional
         public User deleteUserById(UUID id) {
-            boolean exists = userRepository.existsById(id);
-            if (!exists) {
-                throw new IllegalStateException(
-                        "User with id " + id + " does not exist");
-            }
+            User user = userRepository.findById(id)
+                    .orElseThrow(() -> new IllegalStateException(
+                            "User with id " + id + " does not exist"));
+
+//            scheduleRepository.deleteAll(user.getSchedules().remove());
+
+            user.setDepartment(null);
+
             userRepository.deleteById(id);
             return null;
         }
