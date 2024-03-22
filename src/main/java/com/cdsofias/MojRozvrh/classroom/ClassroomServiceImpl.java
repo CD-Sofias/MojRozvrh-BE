@@ -30,22 +30,25 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @Override
-    public Classroom addNewClassroom(Classroom classroom) {
-        Optional<Classroom> classroomOptional = classroomRepository
-                .findByType(classroom.getType());
+    public Classroom addNewClassroom(CreateClassroomDto classroomDto) {
+        Optional<Classroom> classroomOptional = classroomRepository.findByType(classroomDto.type());
         if (classroomOptional.isPresent()) {
             throw new IllegalStateException("Classroom already exists");
         }
 
-        if (classroom.getAddress() != null) {
-            Address address = addressRepository.findById(classroom.getAddress().getId())
-                    .orElseThrow(() -> new IllegalStateException(
-                            "Address with id " + classroom.getAddress().getId() + " does not exist"));
-            classroom.setAddress(address);
-        }
+        Address address = addressRepository.findById(classroomDto.addressId())
+                .orElseThrow(() -> new IllegalStateException(
+                        "Address with id " + classroomDto.addressId() + " does not exist"));
+
+        Classroom classroom = new Classroom();
+        classroom.setType(classroomDto.type());
+        classroom.setCapacity(classroomDto.capacity());
+        classroom.setClassroomNumber(classroomDto.classroomNumber());
+        classroom.setAddress(address);
 
         return classroomRepository.saveAndFlush(classroom);
     }
+
 
     @Override
     public void deleteClassroom(UUID classroomId) {

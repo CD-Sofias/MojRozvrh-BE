@@ -1,6 +1,7 @@
 package com.cdsofias.MojRozvrh.classroom;
 
 import com.cdsofias.MojRozvrh.address.Address;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,13 +16,14 @@ import java.util.UUID;
 @Entity
 @Table(name = "classroom")
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Classroom {
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private UUID id;
     private String type;
-    private int capacity;
-    private int classroom_number;
+    private Integer capacity;
+    private Integer classroomNumber;
 
     @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "address_id", nullable = false)
