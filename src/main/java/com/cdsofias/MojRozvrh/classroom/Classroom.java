@@ -22,8 +22,8 @@ public class Classroom {
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private UUID id;
     private String type;
-    private int capacity;
-    private int classroomNumber;
+    private Integer capacity;
+    private Integer classroomNumber;
 
     @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "address_id", nullable = false)
