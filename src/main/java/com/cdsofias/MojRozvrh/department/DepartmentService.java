@@ -7,5 +7,6 @@ public interface DepartmentService {
     List<Department> getDepartments();
     Department addNewDepartment(Department department);
     void deleteDepartment(UUID departmentId);
-    Department updateDepartment(UUID departmentId, String name, UUID facultyId);
+    Department updateDepartment(UUID departmentId, CreateDepartmentDto departmentDto);
 }
+
