@@ -13,7 +13,10 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository teacherRepository;
 
     @Override
-    public Teacher createTeacher(Teacher teacher) {
+    public Teacher createTeacher(CreateTeacherDto teacherDto) {
+        Teacher teacher = new Teacher();
+        teacher.setName(teacherDto.name());
+        teacher.setSurname(teacherDto.surname());
         return teacherRepository.save(teacher);
     }
 
