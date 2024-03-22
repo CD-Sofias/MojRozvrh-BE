@@ -16,15 +16,19 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
 
+
     @Override
-    public Schedule createSchedule(Schedule schedule) {
-        if (schedule.getUser() != null && schedule.getUser().getId() != null) {
-            User user = userRepository.findById(schedule.getUser().getId())
-                    .orElseThrow(() -> new RuntimeException("User not found"));
-            schedule.setUser(user);
-        }
+    public Schedule createSchedule(CreateScheduleDto createScheduleDto) {
+        User user = userRepository.findById(createScheduleDto.userId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Schedule schedule = new Schedule();
+        schedule.setName(createScheduleDto.name());
+        schedule.setUser(user);
+        user.getSchedules().add(schedule);
+        userRepository.save(user);
         return scheduleRepository.saveAndFlush(schedule);
     }
+
     @Override
     public List<Schedule> findAllSchedules() {
         return scheduleRepository.findAll();
@@ -55,13 +59,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         if (newSchedule.getName() != null && !newSchedule.getName().isEmpty() && !Objects.equals(schedule.getName(), newSchedule.getName())) {
             schedule.setName(newSchedule.getName());
-        }
-
-        if (newSchedule.getUser() != null) {
-            User user = userRepository.findById(newSchedule.getUser().getId())
-                    .orElseThrow(() -> new IllegalStateException(
-                            "User with id " + newSchedule.getUser().getId() + " does not exist"));
-            schedule.setUser(user);
         }
 
         return scheduleRepository.save(schedule);
