@@ -1,5 +1,6 @@
 package com.cdsofias.MojRozvrh.classroom;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +25,8 @@ public class ClassroomController {
     }
 
     @PostMapping
-    public Classroom registerNewClassroom(@RequestBody Classroom classroom) {
-        return classroomService.addNewClassroom(classroom);
+    public Classroom registerNewClassroom(@Valid @RequestBody CreateClassroomDto classroomDto) {
+        return classroomService.addNewClassroom(classroomDto);
     }
 
     @DeleteMapping("{classroomId}")
