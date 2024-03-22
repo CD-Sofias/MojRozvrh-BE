@@ -1,5 +1,6 @@
 package com.cdsofias.MojRozvrh.faculty;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/faculty")
+@RequestMapping("faculty")
 @RequiredArgsConstructor
 public class FacultyController {
 
@@ -18,22 +19,22 @@ public class FacultyController {
         return facultyService.getAllFaculties();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public Faculty getFacultyById(@PathVariable UUID id) {
         return facultyService.getFacultyById(id);
     }
 
     @PostMapping
-    public Faculty createFaculty(@RequestBody Faculty faculty) {
-        return facultyService.createFaculty(faculty);
+    public Faculty createFaculty(@Valid @RequestBody CreateFacultyDto facultyDto) {
+        return facultyService.createFaculty(facultyDto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public Faculty updateFaculty(@PathVariable UUID id, @RequestBody Faculty faculty) {
         return facultyService.updateFaculty(id, faculty);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public void deleteFaculty(@PathVariable UUID id) {
         facultyService.deleteFaculty(id);
     }
