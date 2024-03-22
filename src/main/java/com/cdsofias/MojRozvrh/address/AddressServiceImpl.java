@@ -23,7 +23,9 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address createAddress(Address address) {
+    public Address createAddress(CreateAddressDto addressDto) {
+        Address address = new Address();
+        address.setAddress(addressDto.address());
         return addressRepository.save(address);
     }
 

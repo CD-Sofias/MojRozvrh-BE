@@ -1,8 +1,11 @@
 package com.cdsofias.MojRozvrh.address;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,8 +27,9 @@ public class AddressController {
     }
 
     @PostMapping
-    public Address createAddress(@RequestBody Address address) {
-        return addressService.createAddress(address);
+    public ResponseEntity<Address> createAddress(@Valid @RequestBody CreateAddressDto addressDto) {
+        Address address = addressService.createAddress(addressDto);
+        return ResponseEntity.created(URI.create("/address/" + address.getId())).body(address);
     }
 
     @PutMapping("/{id}")
