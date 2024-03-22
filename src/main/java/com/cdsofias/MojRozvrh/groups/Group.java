@@ -1,13 +1,12 @@
 package com.cdsofias.MojRozvrh.groups;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
 
 import java.util.UUID;
 
@@ -17,6 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "groups")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

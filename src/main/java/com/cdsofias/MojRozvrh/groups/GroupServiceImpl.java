@@ -13,7 +13,11 @@ public class GroupServiceImpl implements GroupService {
 
     private final GroupRepository groupRepository;
 
-    public Group createGroup(Group group) {
+    @Override
+    public Group createGroup(CreateGroupDto groupDto) {
+        Group group = new Group();
+        group.setName(groupDto.name());
+        group.setQuantity(groupDto.quantity());
         return groupRepository.save(group);
     }
 

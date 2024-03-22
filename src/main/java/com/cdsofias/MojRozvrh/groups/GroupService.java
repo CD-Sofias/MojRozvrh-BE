@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface GroupService {
-    Group createGroup(Group group);
+    Group createGroup(CreateGroupDto groupDto);
     List<Group> findAllGroups();
     Group findGroupById(UUID id);
     Group deleteGroupById(UUID id);
