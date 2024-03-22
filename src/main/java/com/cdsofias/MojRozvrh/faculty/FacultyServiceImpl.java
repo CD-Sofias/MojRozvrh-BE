@@ -23,7 +23,9 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
-    public Faculty createFaculty(Faculty faculty) {
+    public Faculty createFaculty(CreateFacultyDto facultyDto) {
+        Faculty faculty = new Faculty();
+        faculty.setName(facultyDto.name());
         return facultyRepository.save(faculty);
     }
 
