@@ -1,5 +1,6 @@
 package com.cdsofias.MojRozvrh;
 
+import com.cdsofias.MojRozvrh.schedule.CreateScheduleDto;
 import com.cdsofias.MojRozvrh.schedule.Schedule;
 import com.cdsofias.MojRozvrh.schedule.ScheduleRepository;
 import com.cdsofias.MojRozvrh.schedule.ScheduleServiceImpl;
@@ -13,8 +14,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -39,20 +40,26 @@ public class MojRozvrhApplicationScheduleTests {
 
     @Test
     public void testCreateSchedule() {
+        UUID userId = UUID.randomUUID();
+        CreateScheduleDto createScheduleDto = new CreateScheduleDto("Test Schedule", userId);
+
+        User user = new User();
+        user.setId(userId);
+
         Schedule schedule = new Schedule();
         schedule.setName("Test Schedule");
-        User user = new User();
-        user.setId(UUID.randomUUID());
         schedule.setUser(user);
 
         when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(user));
         when(scheduleRepository.saveAndFlush(any(Schedule.class))).thenReturn(schedule);
 
-        Schedule createdSchedule = scheduleService.createSchedule(schedule);
+        Schedule createdSchedule = scheduleService.createSchedule(createScheduleDto);
 
-        assertEquals(schedule.getName(), createdSchedule.getName());
-        assertEquals(schedule.getUser().getId(), createdSchedule.getUser().getId());
+        assertEquals(createScheduleDto.name(), createdSchedule.getName());
+        assertEquals(createScheduleDto.userId(), createdSchedule.userId());
     }
+
+
 
     @Test
     public void testFindAllSchedules() {
