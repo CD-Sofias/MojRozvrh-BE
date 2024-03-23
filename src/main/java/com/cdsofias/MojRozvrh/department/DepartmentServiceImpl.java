@@ -2,12 +2,12 @@ package com.cdsofias.MojRozvrh.department;
 
 import com.cdsofias.MojRozvrh.faculty.Faculty;
 import com.cdsofias.MojRozvrh.faculty.FacultyRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,14 +23,16 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department addNewDepartment(Department department) {
+    public Department addNewDepartment(CreateDepartmentDto departmentDto) {
         Optional<Department> departmentOptional = departmentRepository
-                .findByName(department.getName());
+                .findByName(departmentDto.name());
         if (departmentOptional.isPresent()) {
             throw new IllegalStateException("Department already exists");
         }
 
-        Faculty faculty = facultyRepository.findById(department.getFaculty().getId())
+        Department department = new Department();
+        department.setName(departmentDto.name());
+        Faculty faculty = facultyRepository.findById(departmentDto.facultyId())
                 .orElseThrow(() -> new RuntimeException("Faculty not found"));
         department.setFaculty(faculty);
 
@@ -47,7 +49,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         departmentRepository.deleteById(departmentId);
     }
 
-    public Department updateDepartment(UUID departmentId, @Valid CreateDepartmentDto departmentDto) {
+    public Department updateDepartment(UUID departmentId, CreateDepartmentDto departmentDto) {
         Department department = departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new IllegalStateException(
                         "Department with id " + departmentId + " does not exist"));

@@ -5,7 +5,8 @@ import java.util.UUID;
 
 public interface DepartmentService {
     List<Department> getDepartments();
-    Department addNewDepartment(Department department);
+
+    Department addNewDepartment(CreateDepartmentDto department);
     void deleteDepartment(UUID departmentId);
     Department updateDepartment(UUID departmentId, CreateDepartmentDto departmentDto);
 }

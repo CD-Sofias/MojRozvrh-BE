@@ -1,13 +1,16 @@
 package com.cdsofias.MojRozvrh.department;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "department")
+@RequestMapping("department")
 @RequiredArgsConstructor
 public class DepartmentController {
 
@@ -29,10 +32,10 @@ public class DepartmentController {
         departmentService.deleteDepartment(departmentId);
     }
 
-    @PutMapping("/{departmentId}")
+    @PutMapping("{departmentId}")
     public Department updateDepartment(
             @PathVariable UUID departmentId,
-            @RequestBody Department department) {
-        return departmentService.updateDepartment(departmentId, department.getName(), department.getFaculty().getId());
+            @RequestBody @Valid CreateDepartmentDto departmentDto) {
+        return departmentService.updateDepartment(departmentId, departmentDto);
     }
 }
