@@ -1,21 +1,24 @@
 package com.cdsofias.MojRozvrh.users;
 
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("users")
 @AllArgsConstructor
 public class UserController {
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public User createUser(@Valid @RequestBody CreateUserDto userDto) {
+        return userService.createUser(userDto);
     }
 
     @GetMapping
@@ -34,7 +37,12 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public User updateUserById(@PathVariable UUID id, @RequestBody User user, @PathVariable(required = false) UUID departmentId) {
-        return userService.updateUserById(id, user, departmentId);
+    public User updateUserById(@PathVariable UUID id, @Valid @RequestBody CreateUserDto userDto) {
+        return userService.updateUserById(id, userDto);
+    }
+
+    @GetMapping("info")
+    public ResponseEntity<User> getUserInfo(Principal principal) {
+        return ResponseEntity.ok(userService.findByUsername(principal.getName()).orElse(null));
     }
 }

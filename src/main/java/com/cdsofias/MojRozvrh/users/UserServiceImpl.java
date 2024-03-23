@@ -2,12 +2,14 @@ package com.cdsofias.MojRozvrh.users;
 
 import com.cdsofias.MojRozvrh.department.Department;
 import com.cdsofias.MojRozvrh.department.DepartmentRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,18 +25,19 @@ import java.util.UUID;
         }
 
         @Override
-        public User createUser(User user) {
-            Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
-            if (userOptional.isPresent()) {
-                throw new IllegalStateException("User already exists");
-            }
-
-            if (user.getDepartment() != null && user.getDepartment().getId() != null) {
-                Department department = departmentRepository.findById(user.getDepartment().getId())
-                        .orElseThrow(() -> new RuntimeException("Department not found"));
+        public User createUser(CreateUserDto userDto) {
+            User user = User.builder()
+                    .username(userDto.username())
+                    .email(userDto.email())
+                    .password(userDto.password())
+                    .role(userDto.role())
+                    .build();
+            if (userDto.departmentId() != null) {
+                Department department = departmentRepository.findById(userDto.departmentId())
+                        .orElseThrow(() -> new IllegalStateException(
+                                "Department with id " + userDto.departmentId() + " does not exist"));
                 user.setDepartment(department);
             }
-
             return userRepository.saveAndFlush(user);
         }
 
@@ -58,40 +61,43 @@ import java.util.UUID;
         }
 
         @Override
-        public User updateUserById(UUID id, User newUser, UUID departmentId) {
+        public User updateUserById(UUID id, CreateUserDto userDto) {
             User user = userRepository.findById(id)
                     .orElseThrow(() -> new IllegalStateException(
                             "User with id " + id + " does not exist"));
-
-            if (newUser.getName() != null && !newUser.getName().isEmpty() && !Objects.equals(user.getName(), newUser.getName())) {
-                user.setName(newUser.getName());
-            }
-
-            if (newUser.getSurname() != null && !newUser.getSurname().isEmpty() && !Objects.equals(user.getSurname(), newUser.getSurname())) {
-                user.setSurname(newUser.getSurname());
-            }
-
-            if (newUser.getEmail() != null && !newUser.getEmail().isEmpty() && !Objects.equals(user.getEmail(), newUser.getEmail())) {
-                user.setEmail(newUser.getEmail());
-            }
-
-            if (newUser.getPassword() != null && !newUser.getPassword().isEmpty() && !Objects.equals(user.getPassword(), newUser.getPassword())) {
-                user.setPassword(newUser.getPassword());
-            }
-
-            if (newUser.getRole() != null && !Objects.equals(user.getRole(), newUser.getRole())) {
-                user.setRole(newUser.getRole());
-            }
-
-            if (departmentId != null) {
-                Department department = departmentRepository.findById(departmentId)
+            user.setUsername(userDto.username());
+            user.setEmail(userDto.email());
+            user.setPassword(userDto.password());
+            user.setRole(userDto.role());
+            if (userDto.departmentId() != null) {
+                Department department = departmentRepository.findById(userDto.departmentId())
                         .orElseThrow(() -> new IllegalStateException(
-                                "Department with id " + departmentId + " does not exist"));
+                                "Department with id " + userDto.departmentId() + " does not exist"));
                 user.setDepartment(department);
             }
-
-            return userRepository.save(user);
+            return userRepository.saveAndFlush(user);
         }
 
+        @Override
+        public Optional<User> findByUsername(String username) {
+            return userRepository.findByUsername(username);
+        }
+
+        @Override
+        public Optional<User> findByEmail(String email) {
+            return userRepository.findByEmail(email);
+        }
+
+        @Override
+        @Transactional
+        public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            return new org.springframework.security.core.userdetails.User(
+                    user.getUsername(),
+                    user.getPassword(),
+                    List.of(new SimpleGrantedAuthority("ROLE_USER"))
+            );
+        }
     }
 

@@ -1,11 +1,8 @@
 package com.cdsofias.MojRozvrh;
 
-import com.cdsofias.MojRozvrh.users.Role;
-import com.cdsofias.MojRozvrh.users.User;
-import com.cdsofias.MojRozvrh.users.UserServiceImpl;
 import com.cdsofias.MojRozvrh.department.Department;
 import com.cdsofias.MojRozvrh.department.DepartmentRepository;
-import com.cdsofias.MojRozvrh.users.UserRepository;
+import com.cdsofias.MojRozvrh.users.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -40,20 +37,21 @@ public class MojRozvrhApplicationUserTests {
 
     @Test
     public void testCreateUser() {
-        User user = new User();
-        user.setEmail("test@test.com");
-        Department department = new Department();
-        department.setId(UUID.randomUUID());
-        user.setDepartment(department);
+        CreateUserDto user = new CreateUserDto(
+                "username",
+                "test@test.com",
+                "password",
+                Role.USER,
+                UUID.randomUUID());
 
         when(userRepository.findByEmail(any(String.class))).thenReturn(Optional.empty());
-        when(departmentRepository.findById(any(UUID.class))).thenReturn(Optional.of(department));
-        when(userRepository.saveAndFlush(any(User.class))).thenReturn(user);
+        when(departmentRepository.findById(any(UUID.class))).thenReturn(Optional.of(new Department()));
+        when(userRepository.saveAndFlush(any(User.class))).thenReturn(new User());
 
         User createdUser = userService.createUser(user);
 
-        assertEquals(user.getEmail(), createdUser.getEmail());
-        assertEquals(user.getDepartment().getId(), createdUser.getDepartment().getId());
+        assertEquals(user.email(), createdUser.getEmail());
+        assertEquals(user.departmentId(), createdUser.getDepartment().getId());
     }
 
     @Test
@@ -130,8 +128,7 @@ public class MojRozvrhApplicationUserTests {
         User existingUser = new User();
         existingUser.setId(userId);
         existingUser.setEmail("test@test.com");
-        existingUser.setName("Test");
-        existingUser.setSurname("User");
+        existingUser.setUsername("username");
         existingUser.setPassword("password");
         existingUser.setRole(Role.USER);
 
@@ -139,28 +136,25 @@ public class MojRozvrhApplicationUserTests {
         department.setId(UUID.randomUUID());
         existingUser.setDepartment(department);
 
-        User newUser = new User();
-        newUser.setName("NewTest");
-        newUser.setSurname("NewUser");
-        newUser.setEmail("newtest@newtest.com");
-        newUser.setPassword("newpassword");
-        newUser.setRole(Role.ADMIN);
-
         Department newDepartment = new Department();
         newDepartment.setId(UUID.randomUUID());
-        newUser.setDepartment(newDepartment);
+        CreateUserDto newUser = new CreateUserDto(
+                "username",
+                "newtest@newtest.com",
+                "newpassword",
+                Role.ADMIN,
+                newDepartment.getId());
 
         when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(existingUser));
         when(departmentRepository.findById(any(UUID.class))).thenReturn(Optional.of(newDepartment));
-        when(userRepository.save(any(User.class))).thenReturn(newUser);
+        when(userRepository.save(any(User.class))).thenReturn(new User());
 
-        User updatedUser = userService.updateUserById(userId, newUser, newDepartment.getId());
+        User updatedUser = userService.updateUserById(userId, newUser);
 
-        assertEquals(newUser.getName(), updatedUser.getName());
-        assertEquals(newUser.getSurname(), updatedUser.getSurname());
-        assertEquals(newUser.getEmail(), updatedUser.getEmail());
-        assertEquals(newUser.getPassword(), updatedUser.getPassword());
-        assertEquals(newUser.getRole(), updatedUser.getRole());
+        assertEquals(newUser.username(), updatedUser.getUsername());
+        assertEquals(newUser.email(), updatedUser.getEmail());
+        assertEquals(newUser.password(), updatedUser.getPassword());
+        assertEquals(newUser.role(), updatedUser.getRole());
         assertEquals(newDepartment.getId(), updatedUser.getDepartment().getId());
     }
 }
