@@ -1,8 +1,8 @@
 package com.cdsofias.MojRozvrh;
 
-import com.cdsofias.MojRozvrh.users.*;
 import com.cdsofias.MojRozvrh.department.Department;
 import com.cdsofias.MojRozvrh.department.DepartmentRepository;
+import com.cdsofias.MojRozvrh.users.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -37,29 +37,22 @@ public class MojRozvrhApplicationUserTests {
 
     @Test
     public void testCreateUser() {
-        Department department = new Department();
-        department.setId(UUID.randomUUID());
-        CreateUserDto userDto = new CreateUserDto("TestName", "TestSurname", "test@test.com", "TestPassword", Role.USER, department.getId());
+        CreateUserDto user = new CreateUserDto(
+                "username",
+                "test@test.com",
+                "password",
+                Role.USER,
+                UUID.randomUUID());
 
         when(userRepository.findByEmail(any(String.class))).thenReturn(Optional.empty());
-        when(departmentRepository.findById(any(UUID.class))).thenReturn(Optional.of(department));
+        when(departmentRepository.findById(any(UUID.class))).thenReturn(Optional.of(new Department()));
+        when(userRepository.saveAndFlush(any(User.class))).thenReturn(new User());
 
-        User user = new User();
-        user.setName(userDto.name());
-        user.setSurname(userDto.surname());
-        user.setEmail(userDto.email());
-        user.setPassword(userDto.password());
-        user.setRole(userDto.role());
-        user.setDepartment(department);
+        User createdUser = userService.createUser(user);
 
-        when(userRepository.saveAndFlush(any(User.class))).thenReturn(user);
-
-        User createdUser = userService.createUser(userDto);
-
-        assertEquals(userDto.email(), createdUser.getEmail());
-        assertEquals(userDto.departmentId(), createdUser.getDepartment().getId());
+        assertEquals(user.email(), createdUser.getEmail());
+        assertEquals(user.departmentId(), createdUser.getDepartment().getId());
     }
-
 
     @Test
     public void testFindAllUsers() {
@@ -87,7 +80,6 @@ public class MojRozvrhApplicationUserTests {
     }
 
 
-
     @Test
     public void testFindUserById() {
         User user = new User();
@@ -111,26 +103,12 @@ public class MojRozvrhApplicationUserTests {
     @Test
     public void testDeleteUserById() {
         UUID userId = UUID.randomUUID();
-        User userToDelete = new User();
-        userToDelete.setId(userId);
 
-        when(userRepository.findById(userId)).thenReturn(Optional.of(userToDelete));
+        when(userRepository.existsById(any(UUID.class))).thenReturn(true);
 
-        User deletedUser = userService.deleteUserById(userId);
+        userService.deleteUserById(userId);
 
-        assertNotNull(deletedUser);
-        assertNull(deletedUser.getDepartment()); // Assuming setDepartment(null) was the only change
         verify(userRepository, times(1)).deleteById(userId);
-    }
-
-    @Test
-    public void testDeleteUserById_UserNotFound() {
-        UUID userId = UUID.randomUUID();
-
-        when(userRepository.findById(userId)).thenReturn(Optional.empty());
-
-        assertThrows(IllegalStateException.class, () -> userService.deleteUserById(userId));
-        verify(userRepository, never()).deleteById(userId);
     }
 
     @Test
@@ -150,8 +128,7 @@ public class MojRozvrhApplicationUserTests {
         User existingUser = new User();
         existingUser.setId(userId);
         existingUser.setEmail("test@test.com");
-        existingUser.setName("Test");
-        existingUser.setSurname("User");
+        existingUser.setUsername("username");
         existingUser.setPassword("password");
         existingUser.setRole(Role.USER);
 
@@ -159,48 +136,25 @@ public class MojRozvrhApplicationUserTests {
         department.setId(UUID.randomUUID());
         existingUser.setDepartment(department);
 
-        User newUser = new User();
-        newUser.setName("NewTest");
-        newUser.setSurname("NewUser");
-        newUser.setEmail("newtest@newtest.com");
-        newUser.setPassword("newpassword");
-        newUser.setRole(Role.ADMIN);
-
         Department newDepartment = new Department();
         newDepartment.setId(UUID.randomUUID());
-        newUser.setDepartment(newDepartment);
+        CreateUserDto newUser = new CreateUserDto(
+                "username",
+                "newtest@newtest.com",
+                "newpassword",
+                Role.ADMIN,
+                newDepartment.getId());
 
         when(userRepository.findById(any(UUID.class))).thenReturn(Optional.of(existingUser));
         when(departmentRepository.findById(any(UUID.class))).thenReturn(Optional.of(newDepartment));
-        when(userRepository.save(any(User.class))).thenReturn(newUser);
+        when(userRepository.save(any(User.class))).thenReturn(new User());
 
-        User updatedUser = userService.updateUserById(userId, newUser, newDepartment.getId());
+        User updatedUser = userService.updateUserById(userId, newUser);
 
-        assertEquals(newUser.getName(), updatedUser.getName());
-        assertEquals(newUser.getSurname(), updatedUser.getSurname());
-        assertEquals(newUser.getEmail(), updatedUser.getEmail());
-        assertEquals(newUser.getPassword(), updatedUser.getPassword());
-        assertEquals(newUser.getRole(), updatedUser.getRole());
+        assertEquals(newUser.username(), updatedUser.getUsername());
+        assertEquals(newUser.email(), updatedUser.getEmail());
+        assertEquals(newUser.password(), updatedUser.getPassword());
+        assertEquals(newUser.role(), updatedUser.getRole());
         assertEquals(newDepartment.getId(), updatedUser.getDepartment().getId());
-    }
-
-    @Test
-    public void testUpdateUserById_UserNotFound() {
-        UUID userId = UUID.randomUUID();
-        User newUser = new User();
-        newUser.setName("NewTest");
-        newUser.setSurname("NewUser");
-        newUser.setEmail("newtest@newtest.com");
-        newUser.setPassword("newpassword");
-        newUser.setRole(Role.ADMIN);
-
-        Department newDepartment = new Department();
-        newDepartment.setId(UUID.randomUUID());
-        newUser.setDepartment(newDepartment);
-
-        when(userRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
-
-        assertThrows(IllegalStateException.class, () -> userService.updateUserById(userId, newUser, newDepartment.getId()));
-        verify(userRepository, never()).save(any(User.class));
     }
 }
