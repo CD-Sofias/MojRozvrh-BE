@@ -1,6 +1,5 @@
 package com.cdsofias.MojRozvrh.users;
 
-
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +13,8 @@ public class UserController {
     private final UserServiceImpl userService;
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public User createUser(@RequestBody CreateUserDto userDto) {
+        return userService.createUser(userDto);
     }
 
     @GetMapping
