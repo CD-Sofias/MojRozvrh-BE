@@ -1,0 +1,1104 @@
+{
+	"info": {
+		"_postman_id": "f1c5a267-4ba0-4551-8f08-18ca3c3bb4a9",
+		"name": "BD MojRozvrh",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31246654",
+		"_collection_link": "https://crimson-spaceship-657480.postman.co/workspace/BEST-WEB-DESIGN~87057148-830e-412b-8324-71c5cffb0eb5/collection/29322617-f1c5a267-4ba0-4551-8f08-18ca3c3bb4a9?action=share&source=collection_link&creator=31246654"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{$randomUserName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{$randomUserName}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NoX0phY29ic29uNDIiLCJpYXQiOjE3MTAzNjAxNTUsImV4cCI6MTcxMDQ0NjU1NX0.fRhDIyLl6s0bzNpWhZZddZmAaPDrDR-O7Y_qK_TF3IgSZ0wYy5GUIc1yqjYrq0G6",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/info",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Department",
+			"item": [
+				{
+					"name": "Delete department",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/department/f6f1961f-5768-49f7-b7d8-e29ae9891099",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"department",
+								"f6f1961f-5768-49f7-b7d8-e29ae9891099"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all departments",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/department",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create department",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{$randomDepartment}}\",\r\n    \"facultyId\":\"3cd3256a-db78-4ebc-aa36-8d3388a3b487\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/department",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change department by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"nAIVs3\",\r\n    \"facultyId\": \"19b146fc-bbcc-4af9-a7ae-4ed349422804\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/department/f6f1961f-5768-49f7-b7d8-e29ae9891099",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"department",
+								"f6f1961f-5768-49f7-b7d8-e29ae9891099"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Faculty",
+			"item": [
+				{
+					"name": "Create new faculty",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"fpv\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/faculty",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faculty"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get faculty by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/faculty/927b2d6d-d151-41b0-b6ca-0d8fd2e1b13e",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faculty",
+								"927b2d6d-d151-41b0-b6ca-0d8fd2e1b13e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all facultys",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/faculty",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faculty"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change facultys by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"MMM\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/faculty/a1853ef7-fa4d-44ff-99f0-965a88dbfa10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faculty",
+								"a1853ef7-fa4d-44ff-99f0-965a88dbfa10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete faculty",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/faculty/{{id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faculty",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "Get all address",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/address",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new address",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\":\"Tajovskeho 30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/address",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change address by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\":\"Tajovskeho 40\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/address/4505c718-6aad-46af-b525-038186daede4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"address",
+								"4505c718-6aad-46af-b525-038186daede4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete address",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/address/cc1e2557-2792-49ff-9245-ea699e770cc4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"address",
+								"cc1e2557-2792-49ff-9245-ea699e770cc4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get address by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/address/e669b45f-5717-4e48-95ba-03f7b91f62d1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"address",
+								"e669b45f-5717-4e48-95ba-03f7b91f62d1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shedule",
+			"item": [
+				{
+					"name": "Get all shedules",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/schedule",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new shedule",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"My schedule\",\r\n    \"userId\": \"77b8a509-3da3-43ca-872b-225347f95595\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/schedule",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change shedule by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"nAIVs2\",\r\n    \"faculty\": {\r\n        \"id\": \"9071bcb2-5189-4f89-b57c-08bff87c4123\"\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/shedule/{{id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"shedule",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete shedule",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/shedule/{{id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"shedule",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get shedule by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/shedule/{{id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"shedule",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Classroom",
+			"item": [
+				{
+					"name": "Get all classrooms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/classroom",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"classroom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new class",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"Computer Lab\",\r\n    \"capacity\": 30,\r\n    \"classroomNumber\": 101,\r\n    \"addressId\": \"9a3fec77-5a0d-4154-af79-bdecfa155694\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/classroom",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"classroom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change address by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"Lecture Hall1\",\r\n    \"capacity\": 50,\r\n    \"classroom_number\": 102,\r\n    \"address\": {\r\n        \"id\": \"4505c718-6aad-46af-b525-038186daede4\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/classroom/c87050fa-ec8f-4426-8127-48c00d6a7b56",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"classroom",
+								"c87050fa-ec8f-4426-8127-48c00d6a7b56"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete class",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/classroom/a739754a-a6da-45b0-abf1-79dd414b99f6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"classroom",
+								"a739754a-a6da-45b0-abf1-79dd414b99f6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get classroom by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/classroom/fe250ef4-8530-4dca-9d0a-e928e6058d03",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"classroom",
+								"fe250ef4-8530-4dca-9d0a-e928e6058d03"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get all users",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"surname\": \"{{$randomLastName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"role\": \"USER\",\r\n    \"departmentId\": \"523ea72e-9f27-4c0d-bf98-d94f9def483d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change user by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Dima\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/202f0ab5-6c1b-4f0e-bc5b-232b08210b05",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"202f0ab5-6c1b-4f0e-bc5b-232b08210b05"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/202f0ab5-6c1b-4f0e-bc5b-232b08210b05",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"202f0ab5-6c1b-4f0e-bc5b-232b08210b05"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/16ae1aaf-d3b8-4dff-8a30-40c7a319e06b",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"16ae1aaf-d3b8-4dff-8a30-40c7a319e06b"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SheduleCell",
+			"item": [
+				{
+					"name": "Get all shedules cell",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/schedule_cell",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"schedule_cell"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new shedule cell",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupId\": \"990f53af-ff10-4c56-924b-0fde89ac0911\",\r\n\r\n    \"subjectId\": \"81c7c083-8ef1-4c7a-a0c5-96c0c1175649\",\r\n\r\n    \"teacherId\": \"0121c25b-fdcd-464c-9f3b-59fa56a609e5\",\r\n\r\n    \"classroomId\": \"364fda7c-0ae3-4ca2-88bb-945ce55b509b\",\r\n\r\n    \"startTime\": \"2024-03-17T10:15:30\",\r\n    \"endTime\": \"2024-03-17T11:45:30\",\r\n    \"scheduleId\": \"abd05626-b941-4c68-bed1-bedd46aca39f\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/schedule_cell",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"schedule_cell"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change shedule cell by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"group\": {\r\n        \"id\": \"0c6568d5-f12c-43a9-91ed-e1b5fda90ef1\"\r\n    },\r\n    \"subject\": {\r\n        \"id\": \"fa0057d4-f032-4f08-b31f-3ae22c5f0827\"\r\n    },\r\n    \"teacher\": {\r\n        \"id\": \"a71cb1af-d8b5-4222-8096-796879cf7fce\"\r\n    },\r\n    \"classroom\": {\r\n        \"id\": \"2944d2b9-f4d1-4667-940f-eaf74b5671d3\"\r\n    },\r\n    \"startTime\": \"2024-03-17T10:15:30\",\r\n    \"endTime\": \"2024-03-17T11:45:30\",\r\n    \"schedule\": {\r\n        \"id\": \"a2b71496-d852-4ea7-ab4e-8cba22d599fe\"\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/schedule_cell/2c8688f6-b5dc-48b3-a6ae-503d3aaf09f3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"schedule_cell",
+								"2c8688f6-b5dc-48b3-a6ae-503d3aaf09f3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete shedule cell",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/schedule_cell/2c8688f6-b5dc-48b3-a6ae-503d3aaf09f3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"schedule_cell",
+								"2c8688f6-b5dc-48b3-a6ae-503d3aaf09f3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get schedule cell by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/schedule_cell/2c8688f6-b5dc-48b3-a6ae-503d3aaf09f3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"schedule_cell",
+								"2c8688f6-b5dc-48b3-a6ae-503d3aaf09f3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Groups",
+			"item": [
+				{
+					"name": "Create new group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": 20,\r\n    \"name\": \"nAivs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/groups",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"groups"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subjects",
+			"item": [
+				{
+					"name": "Create new subject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"TZI\",\r\n    \"type\": \"Lekcia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/subject",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"subject"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teachers",
+			"item": [
+				{
+					"name": "Create new teacher",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"surname\": \"Vladimir\",\r\n    \"name\": \"Siladi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/teacher",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"teacher"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "department_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "faculty_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
