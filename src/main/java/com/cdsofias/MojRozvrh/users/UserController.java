@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("users")
 @AllArgsConstructor
 public class UserController {
     private final UserServiceImpl userService;
