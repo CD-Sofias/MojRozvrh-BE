@@ -1,6 +1,5 @@
 package com.cdsofias.MojRozvrh.users;
 
-import com.cdsofias.MojRozvrh.department.Department;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +7,7 @@ import jakarta.validation.constraints.Size;
 
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public record CreateUserDto(
         @NotBlank(message = "Name is required")
@@ -31,6 +31,6 @@ public record CreateUserDto(
         Role role,
 
         @NotNull(message = "Department is required")
-        Department department
+        UUID departmentId
 ) implements Serializable {
 }

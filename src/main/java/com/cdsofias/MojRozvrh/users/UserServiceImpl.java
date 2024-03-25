@@ -36,8 +36,8 @@ import java.util.UUID;
             user.setPassword(userDto.password());
             user.setRole(userDto.role());
 
-            if (userDto.department() != null) {
-                Department department = departmentRepository.findById(userDto.department().getId())
+            if (userDto.departmentId() != null) {
+                Department department = departmentRepository.findById(userDto.departmentId())
                         .orElseThrow(() -> new RuntimeException("Department not found"));
                 user.setDepartment(department);
             }

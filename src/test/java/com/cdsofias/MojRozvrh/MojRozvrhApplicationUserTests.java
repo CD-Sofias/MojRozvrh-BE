@@ -39,7 +39,7 @@ public class MojRozvrhApplicationUserTests {
     public void testCreateUser() {
         Department department = new Department();
         department.setId(UUID.randomUUID());
-        CreateUserDto userDto = new CreateUserDto("TestName", "TestSurname", "test@test.com", "TestPassword", Role.USER, department);
+        CreateUserDto userDto = new CreateUserDto("TestName", "TestSurname", "test@test.com", "TestPassword", Role.USER, department.getId());
 
         when(userRepository.findByEmail(any(String.class))).thenReturn(Optional.empty());
         when(departmentRepository.findById(any(UUID.class))).thenReturn(Optional.of(department));
@@ -57,7 +57,7 @@ public class MojRozvrhApplicationUserTests {
         User createdUser = userService.createUser(userDto);
 
         assertEquals(userDto.email(), createdUser.getEmail());
-        assertEquals(userDto.department().getId(), createdUser.getDepartment().getId());
+        assertEquals(userDto.departmentId(), createdUser.getDepartment().getId());
     }
 
 
