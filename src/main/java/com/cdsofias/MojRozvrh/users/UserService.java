@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
-    User createUser(User user);
+    User createUser(CreateUserDto userDto);
     List<User> findAllUsers();
     User findUserById(UUID id);
     User deleteUserById(UUID id);

@@ -1,6 +1,5 @@
 package com.cdsofias.MojRozvrh.users;
 
-
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +10,11 @@ import java.util.UUID;
 @RequestMapping("users")
 @AllArgsConstructor
 public class UserController {
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public User createUser(@RequestBody CreateUserDto userDto) {
+        return userService.createUser(userDto);
     }
 
     @GetMapping
