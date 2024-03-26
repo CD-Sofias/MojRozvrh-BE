@@ -10,7 +10,7 @@ import java.util.UUID;
 @RequestMapping("users")
 @AllArgsConstructor
 public class UserController {
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @PostMapping
     public User createUser(@RequestBody CreateUserDto userDto) {
