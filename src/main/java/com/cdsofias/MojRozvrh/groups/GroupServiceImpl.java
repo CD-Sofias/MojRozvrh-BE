@@ -1,5 +1,7 @@
 package com.cdsofias.MojRozvrh.groups;
 
+import com.cdsofias.MojRozvrh.department.Department;
+import com.cdsofias.MojRozvrh.department.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,16 @@ public class GroupServiceImpl implements GroupService {
 
     private final GroupRepository groupRepository;
 
+    private final DepartmentRepository departmentRepository;
+
     @Override
     public Group createGroup(CreateGroupDto groupDto) {
+        Department department = departmentRepository.findById(groupDto.departmentId())
+                .orElseThrow(() -> new IllegalArgumentException("Department not found"));
         Group group = new Group();
         group.setName(groupDto.name());
         group.setQuantity(groupDto.quantity());
+        group.setDepartment(department);
         return groupRepository.save(group);
     }
 

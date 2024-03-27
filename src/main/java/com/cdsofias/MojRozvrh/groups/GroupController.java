@@ -13,13 +13,14 @@ import java.util.UUID;
 @RequestMapping("groups")
 @AllArgsConstructor
 public class GroupController {
-    private final GroupServiceImpl groupService;
+    private final GroupService groupService;
 
     @PostMapping
     public ResponseEntity<Group> createGroup(@Valid @RequestBody CreateGroupDto groupDto) {
         Group group = groupService.createGroup(groupDto);
-        return ResponseEntity.created(URI.create("/group/" + group.getId())).body(group);
+        return ResponseEntity.created(URI.create("/groups/" + group.getId())).body(group);
     }
+
 
     @GetMapping
     public List<Group> findAllGroups() {
