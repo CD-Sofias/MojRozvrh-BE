@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public record CreateGroupDto (
         @NotNull(message = "Field 'quantity' is required")
@@ -15,5 +16,8 @@ public record CreateGroupDto (
 
         @NotNull(message = "Field 'name' is required")
         @Size(min = 1, max = 100, message = "Name must be between 1 and 100 characters")
-        String name
+        String name,
+
+        @NotNull(message = "Field 'department' is required")
+        UUID departmentId
 ) implements Serializable {}
