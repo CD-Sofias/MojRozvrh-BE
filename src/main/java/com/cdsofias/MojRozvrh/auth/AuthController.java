@@ -1,9 +1,10 @@
 package com.cdsofias.MojRozvrh.auth;
 
 import com.cdsofias.MojRozvrh.auth.dto.AuthResponse;
+import com.cdsofias.MojRozvrh.auth.dto.LoginRequest;
+import com.cdsofias.MojRozvrh.auth.dto.LoginResponse;
 import com.cdsofias.MojRozvrh.auth.dto.SignupRequest;
 import com.cdsofias.MojRozvrh.auth.exception.EmailAlreadyTakenException;
-import com.cdsofias.MojRozvrh.users.User;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("auth")
 public class AuthController {
+
     private final AuthService authService;
 
-
-    @PostMapping("/signup")
+    @PostMapping("signup")
     public ResponseEntity<AuthResponse> register(
             @Valid
             @RequestBody SignupRequest request
@@ -29,12 +30,13 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(authResponse);
     }
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public ResponseEntity<?> login(
-            @RequestBody User request,
+            @RequestBody
+            @Valid LoginRequest request,
             HttpServletResponse response
     ) {
-        AuthResponse authentication = authService.authenticate(request);
+        LoginResponse authentication = authService.authenticate(request);
         ResponseCookie cookie = ResponseCookie.from("accessToken", authentication.token())
                 .httpOnly(true)
                 // 1 day

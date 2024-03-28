@@ -1,6 +1,8 @@
 package com.cdsofias.MojRozvrh.auth;
 
 import com.cdsofias.MojRozvrh.auth.dto.AuthResponse;
+import com.cdsofias.MojRozvrh.auth.dto.LoginRequest;
+import com.cdsofias.MojRozvrh.auth.dto.LoginResponse;
 import com.cdsofias.MojRozvrh.auth.dto.SignupRequest;
 import com.cdsofias.MojRozvrh.auth.exception.EmailAlreadyTakenException;
 import com.cdsofias.MojRozvrh.auth.exception.UsernameAlreadyTakenException;
@@ -45,31 +47,27 @@ public class AuthService {
                 passwordEncoder.encode(userDto.password()),
                 Role.USER,
                 null);
-        User user = userService.createUser(createUserDto);
+        userService.createUser(createUserDto);
 
-        String jwt = jwtService.generateToken(user);
-
-        saveUserToken(jwt, user);
-
-        return new AuthResponse(jwt, "User registration was successful");
+        return new AuthResponse("User registration was successful");
     }
 
     @Transactional
-    public AuthResponse authenticate(User request) {
+    public LoginResponse authenticate(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
+                        request.username(),
+                        request.password()
                 )
         );
 
-        User user = userService.findByUsername(request.getUsername()).orElseThrow();
+        User user = userService.findByUsername(request.username()).orElseThrow();
         String jwt = jwtService.generateToken(user);
 
         revokeAllTokenByUser(user);
         saveUserToken(jwt, user);
 
-        return new AuthResponse(jwt, "User login was successful");
+        return new LoginResponse(jwt, "User login was successful");
     }
 
     private void revokeAllTokenByUser(User user) {
