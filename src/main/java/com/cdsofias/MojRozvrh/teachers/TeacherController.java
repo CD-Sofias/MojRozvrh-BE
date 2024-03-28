@@ -1,17 +1,17 @@
 package com.cdsofias.MojRozvrh.teachers;
 
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("teacher")
-@AllArgsConstructor
+@RequestMapping("teachers")
+@RequiredArgsConstructor
 public class TeacherController {
-    private final TeacherServiceImpl teacherService;
+    private final TeacherService teacherService;
 
     @PostMapping
     public Teacher createTeacher(@Valid @RequestBody CreateTeacherDto teacher) {
