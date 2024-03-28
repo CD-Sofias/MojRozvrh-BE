@@ -7,3 +7,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+    show-sql: true
+logging:
+  level:
+    sql: info
+security:
+  jwt:
+    secret: 09b7b3415277ef6ff9bb770c473cb59ab8476be24f6dc1653102ccead17b795a
+    expiration: 86400000

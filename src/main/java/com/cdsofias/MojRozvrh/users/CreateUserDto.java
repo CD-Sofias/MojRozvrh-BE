@@ -10,14 +10,8 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public record CreateUserDto(
-        @NotBlank(message = "Name is required")
-        @Size(max = 255, message = "Name must be less than 255 characters")
-        String name,
-
-        @NotBlank(message = "Surname is required")
-        @Size(max = 255, message = "Surname must be less than 255 characters")
-        String surname,
-
+        @NotBlank(message = "Username is required")
+        String username,
         @NotBlank(message = "Email is required")
         @Email(message = "Invalid email format")
         @Size(max = 255, message = "Email must be less than 255 characters")
